@@ -1,11 +1,9 @@
 package com.yojomapa.controller;
 
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * Created by yojomapa on 21/03/17.
@@ -19,13 +17,23 @@ public class DiffTextController {
     return new ResponseEntity<>("Equals: " + id, HttpStatus.OK);
   }
 
-  @RequestMapping(value = "/{id}/left", method = RequestMethod.PUT)
-  public ResponseEntity<String> addLeftText(@PathVariable String id) {
-    return new ResponseEntity<>("Left Text Added: " + id, HttpStatus.ACCEPTED);
+  @RequestMapping(value = "/{id}/left", method = RequestMethod.PUT,
+          consumes = MediaType.APPLICATION_JSON_UTF8_VALUE,
+          produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+  public ResponseEntity<String> addLeftText(@RequestBody String base64Encoded, @PathVariable String id) {
+
+    System.out.println("base64Encoded = [" + base64Encoded + "], id = [" + id + "]");
+
+    return new ResponseEntity<>("Left Text Added: " + id + ": " + base64Encoded, HttpStatus.ACCEPTED);
   }
 
-  @RequestMapping(value = "/{id}/right", method = RequestMethod.PUT)
-  public ResponseEntity<String> addRightText(@PathVariable String id) {
-    return new ResponseEntity<>("Right Text Added: " + id, HttpStatus.ACCEPTED);
+  @RequestMapping(value = "/{id}/right", method = RequestMethod.PUT,
+          consumes = MediaType.APPLICATION_JSON_UTF8_VALUE,
+          produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+  public ResponseEntity<String> addRightText(@RequestBody String base64Encoded, @PathVariable String id) {
+
+    System.out.println("base64Encoded = [" + base64Encoded + "], id = [" + id + "]");
+
+    return new ResponseEntity<>("Right Text Added: " + id + ": " + base64Encoded, HttpStatus.ACCEPTED);
   }
 }
